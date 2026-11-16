@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  Free Obituary Writing Tools — free, ungated resource page
+  Funeral Sense with Bill Skidd
+
+  BEFORE PUBLISHING, REPLACE THESE PLACEHOLDERS (search for "REPLACE-"):
+    1. REPLACE-WITH-OB-001-URL   → the YouTube URL for OB-001
+    2. REPLACE-WITH-OB-002-URL   → the YouTube URL for OB-002 (privacy video)
+    3. The video blocks are set to "coming soon". Once a video is live, delete the
+       <div class="soon"> version and un-comment the <a class="card"> version.
+
+  DELIBERATE CONSTRAINTS — please preserve these if you edit:
+    · No analytics, no tracking pixels, no cookies, no external requests at all.
+      Everything (CSS, JS, fonts) is inline. The page makes zero network calls.
+    · No email capture, no account, no install. Required by D-031.
+    · No affiliate links and no consultation CTA. Obituary content is
+      Relationships-tagged and at-need — see D-023 and SAFETY-AND-CLAIMS.md.
+    · Works with JavaScript disabled: the prompt is plain selectable text and
+      the copy button degrades to manual selection instructions.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Obituary Writing Tools | Funeral Sense</title>
+<meta name="description" content="Choose a free AI interviewer or a traditional printable outline to help write an obituary with care. No email, account, or sign-in required.">
+<link rel="canonical" href="https://wpskidd.github.io/funeral-sense/obituary/">
+<meta property="og:title" content="Free Obituary Writing Tools | Funeral Sense">
+<meta property="og:description" content="Use a gentle AI interviewer or download a traditional printable outline. Both are free, private-by-design starting points for families.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wpskidd.github.io/funeral-sense/obituary/">
+<meta name="robots" content="index, follow">
+<style>
+  :root{
+    --bg:#F8F5EF; --surface:#FFFFFF; --ink:#102533; --muted:#5B6871;
+    --line:#DED8CE; --accent:#082535; --accent-ink:#FFFFFF; --gold:#F4AA1B;
+    --note-bg:#F4EFE6; --note-line:#D9CDBB;
+    --radius:14px; --maxw:44rem;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0E1B23; --surface:#172832; --ink:#F5F2EC; --muted:#B7C0C5;
+      --line:#344550; --accent:#F4AA1B; --accent-ink:#082535; --gold:#F4AA1B;
+      --note-bg:#172832; --note-line:#40515A;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:1.0625rem/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding:1.25rem;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto}
+  header{padding:1.25rem 0 .5rem; border-top:.35rem solid var(--gold)}
+  .brand{font-size:.82rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:1.2rem 0 .75rem}
+  .brand span{font-weight:500; letter-spacing:0; text-transform:none; color:var(--muted); margin-left:.45rem}
+  h1{font-size:1.75rem; line-height:1.25; margin:0 0 .5rem; letter-spacing:-.01em}
+  .by{color:var(--muted); font-size:.95rem; margin:0 0 1.5rem}
+  h2{font-size:1.2rem; margin:2.25rem 0 .6rem; line-height:1.3}
+  p{margin:0 0 1rem}
+  ul{margin:0 0 1rem; padding-left:1.2rem}
+  li{margin:0 0 .5rem}
+  a{color:var(--accent); text-underline-offset:3px}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--accent); outline-offset:3px; border-radius:4px}
+
+  .badge{
+    display:inline-block; background:var(--note-bg); border:1px solid var(--note-line);
+    color:var(--ink); border-radius:999px; padding:.3rem .8rem;
+    font-size:.85rem; font-weight:600; margin-bottom:1.25rem;
+  }
+  .note{
+    background:var(--note-bg); border:1px solid var(--note-line);
+    border-radius:var(--radius); padding:1.1rem 1.2rem; margin:1.5rem 0;
+  }
+  .note h2{margin-top:0; font-size:1.05rem}
+  .note ul{margin-bottom:0}
+
+  .printable{
+    background:#082535; color:#FFFFFF; border-radius:var(--radius);
+    padding:1.25rem; margin:1.75rem 0; box-shadow:0 10px 24px rgba(8,37,53,.08);
+  }
+  .printable .eyebrow{color:#F4AA1B; font-size:.82rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin:0 0 .3rem}
+  .printable h2{font-size:1.25rem; margin:0 0 .55rem; color:#FFFFFF}
+  .printable p{color:#E7EDF0}
+  .download{
+    display:inline-block; background:#F4AA1B; color:#082535; font-weight:800;
+    text-decoration:none; border-radius:10px; padding:.75rem 1rem; margin-top:.2rem;
+  }
+  .download:hover{filter:brightness(1.07)}
+
+  .copywrap{margin:1.25rem 0 0}
+  button.copy{
+    width:100%; font:inherit; font-weight:700; font-size:1.05rem;
+    background:var(--accent); color:var(--accent-ink); border:0;
+    border-radius:var(--radius); padding:1.05rem 1.25rem; cursor:pointer;
+    -webkit-appearance:none; appearance:none;
+  }
+  button.copy:hover{filter:brightness(1.07)}
+  button.copy:active{transform:translateY(1px)}
+  .status{
+    min-height:1.5rem; margin:.6rem 0 0; font-size:.95rem;
+    color:var(--accent); font-weight:600; text-align:center;
+  }
+  .manual{font-size:.9rem; color:var(--muted); margin:.4rem 0 0; text-align:center}
+
+  pre.prompt{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.1rem; margin:1rem 0 0; overflow-x:auto;
+    white-space:pre-wrap; overflow-wrap:break-word; word-wrap:break-word;
+    font:.9rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    max-height:26rem; overflow-y:auto;
+  }
+  .steps{counter-reset:s; list-style:none; padding:0}
+  .steps li{counter-increment:s; position:relative; padding-left:2.2rem; margin-bottom:.9rem}
+  .steps li::before{
+    content:counter(s); position:absolute; left:0; top:.05rem;
+    width:1.6rem; height:1.6rem; border-radius:50%;
+    background:var(--accent); color:var(--accent-ink);
+    font-size:.85rem; font-weight:700; display:grid; place-items:center;
+  }
+
+  .cards{display:grid; gap:.85rem; margin:1rem 0 0}
+  .card,.soon{
+    display:block; border:1px solid var(--line); border-radius:var(--radius);
+    padding:1rem 1.1rem; background:var(--surface); text-decoration:none; color:inherit;
+  }
+  .card:hover{border-color:var(--accent)}
+  .card strong,.soon strong{display:block; margin-bottom:.2rem; line-height:1.35}
+  .card span,.soon span{color:var(--muted); font-size:.92rem}
+  .soon{opacity:.72}
+
+  footer{
+    margin:3rem 0 1rem; padding-top:1.5rem; border-top:1px solid var(--line);
+    color:var(--muted); font-size:.9rem;
+  }
+  @media (max-width:30rem){
+    body{padding:1rem .9rem}
+    h1{font-size:1.5rem}
+    pre.prompt{font-size:.85rem; max-height:22rem}
+  }
+  @media print{
+    body{background:#fff; color:#000; padding:0}
+    button.copy,.status,.manual,.cards{display:none}
+    pre.prompt{max-height:none; overflow:visible; border:1px solid #999}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="brand">Funeral Sense <span>with Bill Skidd</span></p>
+  <h1>Free Obituary Writing Tools</h1>
+  <p class="by">Choose the kind of help that feels comfortable to you.</p>
+  <p class="badge">Free · No email address · No account · No sign-in</p>
+</header>
+
+<main>
+  <p>If you are trying to write an obituary right now, you may have the dates and the names and still not know how to make it sound like the person you knew.</p>
+
+  <p>You can use the guided AI interviewer below, or download a traditional two-page outline to print and complete by hand. Neither option is the right one for everyone. Choose the one you trust and understand.</p>
+
+  <p>Both can help you remember and organize. Neither can verify your family's facts or decide what is safe and appropriate to publish. That part stays with you.</p>
+
+  <section class="printable" aria-labelledby="printable-title">
+    <p class="eyebrow">No AI required</p>
+    <h2 id="printable-title">Prefer paper or a regular word processor?</h2>
+    <p>Download the traditional two-page outline. Print it, write on it by hand, or keep it beside you while you draft in the program you already use.</p>
+    <a class="download" href="Obituary-Instructions.pdf" download>Download the Printable Obituary Outline (PDF)</a>
+  </section>
+
+  <h2>The Obituary AI Interviewer</h2>
+  <p>Paste the prompt into whichever AI assistant you already use. It will interview you one gentle question at a time and is explicitly told never to invent a story, relationship, or fact.</p>
+
+  <div class="note">
+    <h2>Before you begin</h2>
+    <ul>
+      <li>Do not enter Social Security numbers, financial information, passwords, account numbers, or other confidential records.</li>
+      <li>Use placeholders for exact home addresses, children's identifying information, medical details, and funeral times or locations until your family decides what will be public.</li>
+      <li>Check the privacy practices and settings of the AI tool you use. They differ from one tool to another.</li>
+      <li>Before publishing, ask another person to verify every name, date, place, relationship, service detail, and donation link.</li>
+    </ul>
+  </div>
+
+  <h2>Copy the prompt</h2>
+
+  <div class="copywrap">
+    <button class="copy" id="copyBtn" type="button" data-label="Copy the prompt">Copy the prompt</button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <p class="manual" id="manual">Or select the text below and copy it yourself.</p>
+  </div>
+
+<pre class="prompt" id="promptText" tabindex="0" aria-label="The obituary interviewer prompt text">You are my compassionate obituary interviewer and drafting assistant.
+
+Help me remember and organize truthful details about a person who died, then help me draft an obituary that sounds like that person. Do not invent, assume, embellish, diagnose, or fill a gap with likely-sounding information. Do not search for information about the person or add online information unless I explicitly ask.
+
+How to work with me:
+
+1. Begin with a short, gentle welcome and a brief privacy reminder. Tell me not to share Social Security numbers, financial or account information, passwords, exact home addresses, or other confidential records. Suggest placeholders for sensitive details until the family decides what will be public.
+
+2. During the interview, ask only one main question in each message. Keep it short. A summary may use bullets, but end with one clear question. If I say I do not know, offer one simpler question or let me skip it. Let me pause, stop, paste notes, or ask for a draft at any time.
+
+3. In the opening response, give the short welcome and privacy reminder, then ask this exact question as the only question:
+   What name did the person like to be called?
+
+4. After I answer, ask separately about my relationship to the person and then one small thing I can picture them doing. Do not ask me to summarize the person's whole life.
+
+5. Help me choose one format, one question at a time:
+   - a traditional death notice: concise and mainly factual;
+   - a life-story obituary: more room for personality and meaningful details;
+   - a hybrid obituary: a clear traditional structure with a few recognizable details. Recommend the hybrid if I am unsure, but do not imply that one format is right for every family.
+
+   Then ask separately where the obituary may appear, whether the publication has a word, character, or cost limit, and whether service details will be public. If I do not know yet, continue and mark the publication choice [DECIDE].
+
+6. Keep working notes in four groups:
+   - CONFIRMED: information I say has been checked, plus a relationship or first-hand memory I clearly present as true;
+   - [VERIFY]: an administrative fact, quotation, secondhand claim, or other information that may be correct but has not been checked;
+   - [DECIDE]: a family, wording, privacy, or publication choice that is not settled;
+   - PRIVATE — DO NOT PUBLISH: information that may help explain the situation but must not appear in a public draft.
+
+   Never move something from [VERIFY], [DECIDE], or PRIVATE into CONFIRMED on your own. Require explicit verification before publishing names, spellings, dates, places, relationships, service details, and donation links. If I limit uncertainty to one part of a statement, do not mark the whole statement [VERIFY]. Do not repeat private information more than necessary.
+
+7. Interview me in manageable sections, one question at a time:
+
+   A. Core facts for the chosen format. Ask about the preferred public name and spelling, age or whether to omit it, residence city if desired, date of death, and preferred wording for the death. Treat the exact date or place of birth, parents' names, education, military service, work, affiliations, cause of death, service information, and memorial contributions as optional—not universally required.
+
+   B. The recognizable person. Ask what people will miss; what the person cooked, fixed, collected, wore, taught, worried about, or laughed at; what a normal day with them looked like; and how they showed care. Prefer a specific habit or action over an unsupported adjective.
+
+   C. The shape of the life. Help me choose two or three themes instead of listing every accomplishment equally. Connect work, service, faith, interests, and achievements to what they meant in the person's life. Do not turn the obituary into a résumé.
+
+   D. Family and relationships. Build a family check before writing prose. For every person considered for inclusion, confirm the public name and spelling, preferred relationship wording, whether the person is surviving or predeceased, and whether a spouse or partner and city or state should appear. Do not assume that legal or biological relationships describe the real family. Do not force a traditional family order. Mark unresolved inclusion or wording choices [DECIDE]. Treat identifying information about children as private unless the family deliberately approves it for publication.
+
+   E. Tone. Ask whether the obituary should feel straightforward, warm, faith-centered, informal, gently humorous, private, or like a combination. Humor must be affectionate and never at the person's or family's expense. Do not impose religious language or euphemisms.
+
+   F. Sensitive or disputed information. Ask one neutral question: "Is there any private, sensitive, or disputed information you would like help deciding whether or how to mention? You can say no."
+
+   If I say no, move on without listing examples. If I raise a sensitive issue, do not force disclosure, take sides, diagnose, give legal or medical advice, or present disputed information as fact. Mark the decision [DECIDE] and recommend appropriate family and professional review when warranted.
+
+   If suicide is discussed, use "died by suicide" if the family chooses direct language. Do not include the method, exact location, contents of a note, or a speculative single cause. If substance use is discussed, use person-first, non-stigmatizing language and avoid labels such as "addict" or "junkie."
+
+   G. Public details. Never include a home address, personal phone number, personal email address, account information, or confidential identifier. Include a service venue's public address only after I confirm that the event is public and the address is verified. If the service is private, say so without exposing the location. Use only a verified official organization name, donation URL, or mailing address for memorial contributions; never invent a donation page.
+
+8. After every three to five questions, or whenever I ask, give a short checkpoint under the four working-note headings. Then ask one question: "What would you like to correct, add, or keep private?" Do not make me reconfirm every answer after every section.
+
+9. Do not draft until I say I am ready or directly ask for a draft. If I directly request a draft and provide enough information, treat that request as approval; do not force me through the full interview. Still preserve the four information groups and provide the review package. Otherwise, before drafting, show me:
+   - the CONFIRMED facts;
+   - the [VERIFY] list;
+   - the [DECIDE] list;
+   - anything classified PRIVATE — DO NOT PUBLISH, described without unnecessarily repeating it;
+   - the proposed format, two or three themes, tone, destination, and target length.
+
+   Ask for approval with one question.
+
+10. When I approve the plan, offer the most relevant drafting choices:
+   - a short notice fitted to a supplied limit;
+   - a standard obituary, usually about 250–350 words unless I choose otherwise;
+   - a fuller life-story obituary at a length we choose.
+
+   For a traditional notice, use this order when relevant: death announcement; birth and background; brief life, work, service, faith, or affiliations; surviving and predeceased loved ones; service information; memorial contributions. For a life-story obituary, lead with a recognizable detail or theme and weave the necessary facts into the story. For a hybrid, use the traditional order but give the recognizable person meaningful space. Omit any section that does not fit the person or the family's wishes.
+
+11. In every draft:
+   - use only information I provided or explicitly approved;
+   - show character through specific actions and details;
+   - avoid clichés unless I request one and explain how it was true;
+   - never invent a quotation, feeling, relationship, service detail, achievement, or cause of death;
+   - exclude everything marked PRIVATE — DO NOT PUBLISH;
+   - if an unresolved fact is essential, use a clear placeholder such as [VERIFY: service time]; otherwise omit it from the draft and keep it in the review list;
+   - keep unresolved family or wording choices visible as [DECIDE];
+   - do not publish, submit, email, or share anything.
+
+12. After the draft, provide this review package:
+   A. PUBLIC DRAFT
+   B. VERIFY BEFORE PUBLISHING
+   C. FAMILY DECISIONS STILL OPEN
+   D. PRIVACY CHECK — what was withheld or still deserves review, without repeating confidential details
+   E. APPROXIMATE WORD COUNT
+   F. FINAL CHECKLIST:
+      - verify every name, spelling, date, place, relationship, service detail, and donation link;
+      - confirm cause-of-death and other sensitive wording;
+      - remove or resolve every [VERIFY] and [DECIDE] marker;
+      - confirm whether each service is public or private;
+      - read the obituary aloud;
+      - have at least one other family member or designated reviewer approve it;
+      - check the final text against the publication's current requirements.
+
+Begin now with the short privacy reminder and the exact first question only.</pre>
+
+  <h2>How to use it</h2>
+  <ol class="steps">
+    <li>Copy the prompt above.</li>
+    <li>Paste it into the AI assistant you already use and send it.</li>
+    <li>Answer the questions one at a time. You can skip anything, and you can stop and come back.</li>
+  </ol>
+  <p>You do not have to finish in one sitting, and you do not have to answer everything. Even a handful of specific details will give you something better than a blank page.</p>
+
+  <h2>Watch</h2>
+  <div class="cards">
+
+    <div class="soon">
+      <strong>How to Write an Obituary With Feeling and Purpose</strong>
+      <span>Coming soon — the full method for collecting details, choosing what matters, and making the person recognizable.</span>
+    </div>
+    <!--
+    <a class="card" href="REPLACE-WITH-OB-001-URL">
+      <strong>How to Write an Obituary With Feeling and Purpose</strong>
+      <span>The full method: how to collect the details, choose what matters, and make the person recognizable.</span>
+    </a>
+    -->
+
+    <!-- OB-002 is not published yet. When it is live, delete the .soon block
+         below and un-comment the .card link that follows it. -->
+    <div class="soon">
+      <strong>Before You Publish: Details That Can Put a Family at Risk</strong>
+      <span>Coming soon — what to consider removing from an obituary before it goes public.</span>
+    </div>
+    <!--
+    <a class="card" href="REPLACE-WITH-OB-002-URL">
+      <strong>Before You Publish: Details That Can Put a Family at Risk</strong>
+      <span>What to consider removing from an obituary before it goes public.</span>
+    </a>
+    -->
+
+  </div>
+
+  <div class="note">
+    <h2>One last thing</h2>
+    <p style="margin:0">AI can ask good questions and help organize language. The family remains responsible for the facts, the choices, and the final words. Read the obituary aloud before anyone approves it — it is the fastest way to hear whether it sounds like the person.</p>
+  </div>
+</main>
+
+<footer>
+  <p>This page is free to use and free to share. Nothing on it is tracked, and it asks for no information about you.</p>
+  <p>This is general educational guidance and is not legal, medical, mental-health, or individualized professional advice. Publication rules, prices, and practices vary — verify details with the publication and the professionals helping your family.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copyBtn');
+  var pre = document.getElementById('promptText');
+  var status = document.getElementById('status');
+  var manual = document.getElementById('manual');
+  if (!btn || !pre) return;
+
+  function say(msg) { status.textContent = msg; }
+
+  function reset() {
+    window.setTimeout(function () {
+      btn.textContent = btn.getAttribute('data-label');
+      say('');
+    }, 4000);
+  }
+
+  function selectPrompt() {
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function legacyCopy() {
+    if (!selectPrompt()) return false;
+    try { return document.execCommand('copy'); } catch (e) { return false; }
+  }
+
+  function succeeded() {
+    btn.textContent = 'Copied';
+    say('Copied. Now paste it into your AI assistant.');
+    reset();
+  }
+
+  function failed() {
+    say('Copying was blocked. The prompt is selected below — press Ctrl+C, or Cmd+C on a Mac.');
+    selectPrompt();
+    reset();
+  }
+
+  btn.addEventListener('click', function () {
+    var text = pre.innerText || pre.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(succeeded, function () {
+        if (legacyCopy()) { succeeded(); } else { failed(); }
+      });
+    } else if (legacyCopy()) {
+      succeeded();
+    } else {
+      failed();
+    }
+  });
+
+  // The button only exists usefully with JS; soften the manual hint when it works.
+  manual.textContent = 'Or select the text below and copy it yourself.';
+})();
+</script>
+
+</body>
+</html>
